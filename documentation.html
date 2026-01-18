@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCD Case Study Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #333;
+            overflow: hidden;
+        }
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            padding: 60px 80px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 40px;
+            font-size: 0.9em;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        h1 {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border-bottom: 5px solid #c9b8d9;
+            padding-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 2.2em;
+            color: #34495e;
+            margin-bottom: 30px;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+            color: #5d6d7e;
+            margin-bottom: 15px;
+            margin-top: 25px;
+        }
+        
+        p, li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #444;
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        li {
+            padding: 12px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        li:before {
+            content: "▸";
+            position: absolute;
+            left: 10px;
+            color: #a8d5e2;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #ffd1dc 0%, #ffb3c6 100%);
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .metric-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 5px solid;
+        }
+        
+        .metric-box:nth-child(1) { border-color: #ffd1dc; }
+        .metric-box:nth-child(2) { border-color: #c9b8d9; }
+        .metric-box:nth-child(3) { border-color: #a8d5e2; }
+        .metric-box:nth-child(4) { border-color: #b8e6d5; }
+        
+        .metric-number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .metric-label {
+            font-size: 1.1em;
+            color: #666;
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        
+        .column {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+        
+        .process-box {
+            background: white;
+            padding: 20px 30px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border-left: 6px solid;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .process-box:nth-child(1) { border-color: #ffd1dc; }
+        .process-box:nth-child(2) { border-color: #c9b8d9; }
+        .process-box:nth-child(3) { border-color: #a8d5e2; }
+        .process-box:nth-child(4) { border-color: #f7d794; }
+        .process-box:nth-child(5) { border-color: #b8e6d5; }
+        .process-box:nth-child(6) { border-color: #e6b8c9; }
+        
+        .process-number {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            background: #2c3e50;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        .quote-box {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            padding: 25px 30px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border-left: 5px solid #c9b8d9;
+            font-style: italic;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .quote-author {
+            text-align: right;
+            font-weight: 600;
+            margin-top: 10px;
+            font-style: normal;
+            color: #666;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #c9b8d9 0%, #a8d5e2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+        
+        .title-slide {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .title-slide h1 {
+            color: white;
+            font-size: 4em;
+            border: none;
+            margin-bottom: 30px;
+        }
+        
+        .title-slide p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        
+        .context-tag {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin: 10px;
+            color: white;
+            font-weight: 500;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        th {
+            background: linear-gradient(135deg, #c9b8d9 0%, #a8d5e2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 1em;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 1em;
+        }
+        
+        tr:hover {
+            background: #fafbfc;
+        }
+        
+        .positive {
+            color: #27ae60;
+            font-weight: 700;
+        }
+        
+        .insight-card {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border-top: 4px solid;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+        
+        .insight-card:nth-child(odd) { border-color: #ffd1dc; }
+        .insight-card:nth-child(even) { border-color: #a8d5e2; }
+        
+        .content-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 20px;
+        }
+        
+        .content-scroll::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .content-scroll::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+        }
+        
+        .content-scroll::-webkit-scrollbar-thumb {
+            background: #c9b8d9;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <h1>Redesigning Digital Intake Assessment</h1>
+            <p style="font-size: 2em; margin-bottom: 30px;">From Burden to Breakthrough</p>
+            <div>
+                <span class="context-tag">Long-term Care Facility</span>
+                <span class="context-tag">Program Therapist</span>
+                <span class="context-tag">6 Weeks</span>
+            </div>
+            <div class="slide-number">1 / 20</div>
+        </div>
+
+        <!-- Slide 2: The Problem -->
+        <div class="slide">
+            <h2>The Challenge</h2>
+            <div class="content-scroll">
+                <p style="font-size: 1.4em; margin-bottom: 30px;">The digital intake assessment used by the activity department was <span class="highlight">lengthy and poorly aligned</span> with how staff actually learned about residents.</p>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <h3>What Was Happening</h3>
+                        <ul>
+                            <li>Incomplete entries</li>
+                            <li>30-45 min per assessment</li>
+                            <li>Poor data quality</li>
+                            <li>Staff frustration</li>
+                            <li>Missed opportunities</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Core Issue</h3>
+                        <div class="quote-box">
+                            Assessment designed based on what administrators <em>thought</em> staff needed, not how staff <em>actually</em> gathered information or what they needed for activity planning.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">2 / 20</div>
+        </div>
+
+        <!-- Slide 3: Goal & Impact -->
+        <div class="slide">
+            <h2>Goal & Intended Impact</h2>
+            <div class="content-scroll">
+                <div class="quote-box" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-color: #66bb6a;">
+                    <p style="font-size: 1.3em; color: #2c3e50;">Redesign the digital intake assessment to align with staff workflow, reduce completion time, and improve data quality for personalized activity planning.</p>
+                </div>
+                
+                <h3>Success Metrics</h3>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-number">50%</div>
+                        <div class="metric-label">Reduce Assessment Time</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">95%+</div>
+                        <div class="metric-label">Completion Rate</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">↑</div>
+                        <div class="metric-label">Staff Satisfaction</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">↑</div>
+                        <div class="metric-label">Actionable Data</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">3 / 20</div>
+        </div>
+
+        <!-- Slide 4: HCD Process Overview -->
+        <div class="slide">
+            <h2>HCD Process: 6 Phases</h2>
+            <div class="content-scroll">
+                <div class="process-box">
+                    <span class="process-number">1</span>
+                    <strong>Observe & Discover</strong> - Direct observation, contextual inquiry
+                </div>
+                <div class="process-box">
+                    <span class="process-number">2</span>
+                    <strong>Contextual Inquiry</strong> - Interviews, process mapping
+                </div>
+                <div class="process-box">
+                    <span class="process-number">3</span>
+                    <strong>Synthesize Insights</strong> - Affinity mapping, journey mapping
+                </div>
+                <div class="process-box">
+                    <span class="process-number">4</span>
+                    <strong>Ideate & Co-Design</strong> - Workshops, collaborative design
+                </div>
+                <div class="process-box">
+                    <span class="process-number">5</span>
+                    <strong>Rapid Prototype</strong> - Iterative testing, refinement
+                </div>
+                <div class="process-box">
+                    <span class="process-number">6</span>
+                    <strong>Test & Scale</strong> - Pilot testing, implementation, training
+                </div>
+            </div>
+            <div class="slide-number">4 / 20</div>
+        </div>
+
+        <!-- Slide 5: Phase 1 - Observe -->
+        <div class="slide">
+            <h2>Phase 1: Observe & Discover</h2>
+            <div class="content-scroll">
+                <p><strong>Duration:</strong> Week 1-2 | <strong>Methods:</strong> Direct observation, contextual inquiry</p>
+                
+                <h3>What I Did</h3>
+                <ul>
+                    <li>Observed 8 staff members conducting intake assessments</li>
+                    <li>Shadowed during natural conversations with residents</li>
+                    <li>Watched when staff abandoned digital tool for paper notes</li>
+                    <li>Tracked completion times (25-50 minutes)</li>
+                </ul>
+                
+                <h3>Key Observations</h3>
+                <div class="insight-card">
+                    Staff learned most through <strong>casual conversation</strong> during activities, meals, and hallway encounters - NOT during formal assessment
+                </div>
+                <div class="insight-card">
+                    Digital form had <strong>47 questions</strong> across 6 screens with significant scrolling
+                </div>
+                <div class="insight-card">
+                    Natural conversation flow was <strong>disrupted</strong> by stopping to type
+                </div>
+            </div>
+            <div class="slide-number">5 / 20</div>
+        </div>
+
+        <!-- Slide 6: Phase 2 - Contextual Inquiry -->
+        <div class="slide">
+            <h2>Phase 2: Contextual Inquiry</h2>
+            <div class="content-scroll">
+                <p><strong>Duration:</strong> Week 2 | <strong>Methods:</strong> Semi-structured interviews, process mapping</p>
+                
+                <h3>Staff Insights</h3>
+                <div class="quote-box">
+                    "I learn more in 5 minutes watching them during lunch than 30 minutes with the form"
+                    <div class="quote-author">— Activity Staff</div>
+                </div>
+                <div class="quote-box">
+                    "Half these questions are already in nursing's admission - why am I asking again?"
+                    <div class="quote-author">— Activity Staff</div>
+                </div>
+                
+                <h3>Resident Insights</h3>
+                <div class="quote-box">
+                    "She kept looking at the computer instead of me"
+                    <div class="quote-author">— Resident</div>
+                </div>
+                <div class="quote-box">
+                    "I couldn't remember all my hobbies, I felt put on the spot"
+                    <div class="quote-author">— Resident</div>
+                </div>
+            </div>
+            <div class="slide-number">6 / 20</div>
+        </div>
+
+        <!-- Slide 7: Critical Discovery -->
+        <div class="slide">
+            <h2>Critical Discovery</h2>
+            <div class="content-scroll">
+                <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); padding: 30px; border-radius: 20px; margin: 30px 0; border-left: 8px solid #ff9800;">
+                    <p style="font-size: 1.4em; color: #2c3e50; margin-bottom: 20px;"><strong>Staff naturally gathered information in 3 key moments:</strong></p>
+                    
+                    <div class="process-box" style="margin: 15px 0;">
+                        <span class="process-number">1</span>
+                        <strong>Initial Hello</strong> (5 min) - Basic preferences, mood, communication style
+                    </div>
+                    
+                    <div class="process-box" style="margin: 15px 0;">
+                        <span class="process-number">2</span>
+                        <strong>During First Activity</strong> (15 min) - Observing engagement, energy, social comfort
+                    </div>
+                    
+                    <div class="process-box" style="margin: 15px 0;">
+                        <span class="process-number">3</span>
+                        <strong>Follow-up Conversation</strong> (10 min) - Deeper interests, past experiences, goals
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.3em; text-align: center; margin-top: 30px;">But the current tool forced everything into <span class="highlight">one 45-minute formal interview</span></p>
+            </div>
+            <div class="slide-number">7 / 20</div>
+        </div>
+
+        <!-- Slide 8: Phase 3 - Synthesize -->
+        <div class="slide">
+            <h2>Phase 3: Synthesize Insights</h2>
+            <div class="content-scroll">
+                <p><strong>Duration:</strong> Week 3 | <strong>Methods:</strong> Affinity mapping, journey mapping, pain point analysis</p>
+                
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Essential (Must Know)</h3>
+                        <ul style="font-size: 1em;">
+                            <li>Communication preferences</li>
+                            <li>Mobility/physical needs</li>
+                            <li>Cognitive status</li>
+                            <li>Social comfort level</li>
+                            <li>3-5 activities enjoyed</li>
+                            <li>Things that bring joy</li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Redundant/Irrelevant</h3>
+                        <ul style="font-size: 1em;">
+                            <li>Medical diagnoses (in chart)</li>
+                            <li>Medication list (in chart)</li>
+                            <li>Admission date (in system)</li>
+                            <li>Detailed work history</li>
+                            <li>Childhood activities</li>
+                            <li>Food preferences (dietary)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="insight-card" style="margin-top: 30px;">
+                    <strong>Key Pattern:</strong> Staff needed just enough information to invite someone to their first activity - not a complete life story
+                </div>
+            </div>
+            <div class="slide-number">8 / 20</div>
+        </div>
+
+        <!-- Slide 9: Phase 4 - Co-Design -->
+        <div class="slide">
+            <h2>Phase 4: Ideate & Co-Design</h2>
+            <div class="content-scroll">
+                <p><strong>Duration:</strong> Week 3-4 | <strong>Methods:</strong> Brainstorming workshops, paper prototyping</p>
+                
+                <h3>Workshop Output</h3>
+                <p style="margin: 20px 0;">Staff co-designed a <span class="highlight">3-part intake process:</span></p>
+                
+                <div class="process-box">
+                    <span class="process-number">1</span>
+                    <strong>Quick Connect</strong> (5 min) - Bedside or common area
+                </div>
+                
+                <div class="process-box">
+                    <span class="process-number">2</span>
+                    <strong>Activity Observation</strong> (10 min) - During/after first activity
+                </div>
+                
+                <div class="process-box">
+                    <span class="process-number">3</span>
+                    <strong>Preference Deep Dive</strong> (15 min) - Follow-up after rapport built
+                </div>
+                
+                <h3>Key Innovations</h3>
+                <ul>
+                    <li>Split into multiple brief touchpoints instead of one long session</li>
+                    <li>Checkbox lists with examples instead of open text fields</li>
+                    <li>Visual activity menu to prompt resident memory</li>
+                    <li>Mobile-friendly format for completion during natural encounters</li>
+                </ul>
+            </div>
+            <div class="slide-number">9 / 20</div>
+        </div>
+
+        <!-- Slide 10: Phase 5 - Prototyping -->
+        <div class="slide">
+            <h2>Phase 5: Rapid Prototype</h2>
+            <div class="content-scroll">
+                <p><strong>Duration:</strong> Week 4-5 | <strong>Methods:</strong> Iterative testing, think-aloud protocol</p>
+                
+                <h3>Prototype Evolution</h3>
+                
+                <div class="insight-card">
+                    <strong>Prototype 1: Mobile-First Assessment</strong><br>
+                    ✓ Faster (12 min)<br>
+                    ✗ Too much typing, no auto-save
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Prototype 2: Smart Form with Dropdowns</strong><br>
+                    ✓ Much faster (8 min), less typing<br>
+                    ✗ Some dropdowns didn't fit, mobile view cramped
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Prototype 3: Hybrid Approach (Final)</strong><br>
+                    ✓ Works on phone/tablet/computer<br>
+                    ✓ Auto-saves every 30 seconds<br>
+                    ✓ Visual activity menu<br>
+                    ✓ Optional fields with "revisit later" option<br>
+                    <strong>Total: 20 minutes (down from 45)</strong><br>
+                    <strong>Fields: 22 (down from 47)</strong>
+                </div>
+            </div>
+            <div class="slide-number">10 / 20</div>
+        </div>
+
+        <!-- Slide 10.5: Before & After Comparison -->
+        <div class="slide">
+            <h2>Before & After: Assessment Comparison</h2>
+            <div class="content-scroll">
+                <div class="two-column" style="gap: 20px;">
+                    <!-- BEFORE -->
+                    <div style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%); padding: 25px; border-radius: 15px; border: 3px solid #e57373;">
+                        <h3 style="color: #c62828; text-align: center; margin-bottom: 20px;">❌ BEFORE (Old Assessment)</h3>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 10px; font-size: 0.9em; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div style="color: #666; font-weight: 600; margin-bottom: 10px;">Section 1 of 6: Personal Information</div>
+                            <div style="margin: 8px 0; color: #444;">1. Full legal name: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">2. Date of birth: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">3. Social security number: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">4. Previous address: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">5. Emergency contact 1 name: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">6. Emergency contact 1 phone: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">7. Emergency contact 1 relationship: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">8. Emergency contact 2 name: _______________</div>
+                            <div style="color: #999; font-style: italic; margin-top: 10px;">...continues for 8 more fields</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 10px; font-size: 0.9em; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div style="color: #666; font-weight: 600; margin-bottom: 10px;">Section 2 of 6: Medical History</div>
+                            <div style="margin: 8px 0; color: #444;">17. Primary diagnosis: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">18. Secondary diagnoses: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">19. Current medications: _______________</div>
+                            <div style="margin: 8px 0; color: #444;">20. Allergies: _______________</div>
+                            <div style="color: #999; font-style: italic; margin-top: 10px;">...continues for 6 more fields</div>
+                        </div>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 10px; font-size: 0.9em; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div style="color: #666; font-weight: 600; margin-bottom: 10px;">Section 5 of 6: Interests & Hobbies</div>
+                            <div style="margin: 8px 0; color: #444;">38. What hobbies do you have?<br><textarea style="width: 100%; height: 60px; margin-top: 5px; padding: 8px; border: 1px solid #ddd;" readonly></textarea></div>
+                            <div style="margin: 8px 0; color: #444;">39. Describe your work history:<br><textarea style="width: 100%; height: 60px; margin-top: 5px; padding: 8px; border: 1px solid #ddd;" readonly></textarea></div>
+                            <div style="margin: 8px 0; color: #444;">40. What activities did you do as a child?<br><textarea style="width: 100%; height: 60px; margin-top: 5px; padding: 8px; border: 1px solid #ddd;" readonly></textarea></div>
+                        </div>
+                        
+                        <div style="background: #ffcdd2; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; font-weight: 600; color: #c62828;">
+                            📋 47 questions | ⏰ 42 minutes | 📱 6 screens<br>
+                            73% completion rate
+                        </div>
+                    </div>
+                    
+                    <!-- AFTER -->
+                    <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 25px; border-radius: 15px; border: 3px solid #66bb6a;">
+                        <h3 style="color: #2e7d32; text-align: center; margin-bottom: 20px;">✅ AFTER (New Assessment)</h3>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 10px; font-size: 0.9em; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div style="color: #2e7d32; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Part 1: Quick Connect (5 min)</div>
+                            
+                            <div style="margin: 12px 0;">
+                                <strong style="color: #444;">1. How do you prefer to be addressed?</strong>
+                                <div style="margin-top: 8px;">
+                                    <label style="display: inline-block; margin-right: 15px; color: #555;"><input type="radio" disabled> First name</label>
+                                    <label style="display: inline-block; margin-right: 15px; color: #555;"><input type="radio" disabled> Mr./Mrs./Ms.</label>
+                                    <label style="display: inline-block; color: #555;"><input type="radio" disabled> Nickname</label>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 12px 0;">
+                                <strong style="color: #444;">2. How do you communicate best?</strong>
+                                <div style="margin-top: 8px;">
+                                    <label style="display: block; margin: 5px 0; color: #555;"><input type="checkbox" disabled> I speak clearly</label>
+                                    <label style="display: block; margin: 5px 0; color: #555;"><input type="checkbox" disabled> I use hearing aids</label>
+                                    <label style="display: block; margin: 5px 0; color: #555;"><input type="checkbox" disabled> I prefer written words</label>
+                                    <label style="display: block; margin: 5px 0; color: #555;"><input type="checkbox" disabled> I need large print</label>
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 12px 0;">
+                                <strong style="color: #444;">3. How do you like to spend time?</strong>
+                                <div style="margin-top: 8px;">
+                                    <label style="display: inline-block; margin-right: 15px; color: #555;"><input type="radio" disabled> With groups</label>
+                                    <label style="display: inline-block; margin-right: 15px; color: #555;"><input type="radio" disabled> One-on-one</label>
+                                    <label style="display: inline-block; color: #555;"><input type="radio" disabled> Alone</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 10px; font-size: 0.9em; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div style="color: #2e7d32; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Part 2: Activity Observation (5 min)</div>
+                            <div style="font-style: italic; color: #666; margin-bottom: 10px; font-size: 0.95em;">✏️ Completed by staff after resident's first activity</div>
+                            
+                            <div style="margin: 10px 0;">
+                                <strong style="color: #444;">During the activity, the resident:</strong>
+                                <div style="margin-top: 8px;">
+                                    <label style="display: block; margin: 5px 0; color: #555;"><input type="checkbox" disabled> Smiled or laughed</label>
+                                    <label style="display: block; margin: 5px 0; color: #555;"><input type="checkbox" disabled> Talked with others</label>
+                                    <label style="display: block; margin: 5px 0; color: #555;"><input type="checkbox" disabled> Participated actively</label>
+                                    <label style="display: block; margin: 5px 0; color: #555;"><input type="checkbox" disabled> Stayed the whole time</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 10px; font-size: 0.9em; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div style="color: #2e7d32; font-weight: 600; margin-bottom: 15px; font-size: 1.1em;">Part 3: Preference Deep Dive (10 min)</div>
+                            
+                            <div style="margin: 12px 0;">
+                                <strong style="color: #444;">4. What activities have you enjoyed? (Select all that apply)</strong>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
+                                    <label style="color: #555;"><input type="checkbox" disabled> 🎨 Arts & Crafts</label>
+                                    <label style="color: #555;"><input type="checkbox" disabled> 🎵 Music</label>
+                                    <label style="color: #555;"><input type="checkbox" disabled> 🌻 Gardening</label>
+                                    <label style="color: #555;"><input type="checkbox" disabled> 📚 Reading</label>
+                                    <label style="color: #555;"><input type="checkbox" disabled> 🎮 Games</label>
+                                    <label style="color: #555;"><input type="checkbox" disabled> 🧘 Exercise</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #c8e6c9; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: center; font-weight: 600; color: #2e7d32;">
+                            📋 22 questions | ⏰ 19 minutes | 📱 3 parts<br>
+                            100% completion rate
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">11 / 23</div>
+        </div>
+
+        <!-- Slide 11: Phase 6 - Test & Scale -->
+        <div class="slide">
+            <h2>Phase 6: Test & Scale</h2>
+            <div class="content-scroll">
+                <p><strong>Duration:</strong> Week 5-6 | <strong>Methods:</strong> Pilot testing, A/B comparison, training</p>
+                
+                <h3>Pilot Setup</h3>
+                <ul>
+                    <li>2 staff used new assessment</li>
+                    <li>2 staff continued with old assessment</li>
+                    <li>Tracked 20 new resident intakes (10 each)</li>
+                    <li>Measured completion time, rate, satisfaction, data quality</li>
+                </ul>
+                
+                <h3>Results After 2 Weeks</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Old</th>
+                            <th>New</th>
+                            <th>Change</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Completion time</td>
+                            <td>42 min</td>
+                            <td>19 min</td>
+                            <td class="positive">-55%</td>
+                        </tr>
+                        <tr>
+                            <td>Completion rate</td>
+                            <td>73%</td>
+                            <td>100%</td>
+                            <td class="positive">+27%</td>
+                        </tr>
+                        <tr>
+                            <td>Staff satisfaction</td>
+                            <td>4.2/10</td>
+                            <td>8.7/10</td>
+                            <td class="positive">+107%</td>
+                        </tr>
+                        <tr>
+                            <td>Fields completed</td>
+                            <td>58%</td>
+                            <td>94%</td>
+                            <td class="positive">+62%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="slide-number">11 / 23</div>
+        </div>
+
+        <!-- Slide 12: Visual Activity Menu Example -->
+        <div class="slide">
+            <h2>Design Innovation: Visual Activity Menu</h2>
+            <div class="content-scroll">
+                <div style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 30px; border-radius: 20px; margin-bottom: 25px;">
+                    <p style="font-size: 1.3em; color: #1565c0; text-align: center; margin-bottom: 20px;"><strong>Problem:</strong> Open-ended "What are your hobbies?" overwhelmed residents</p>
+                    <p style="font-size: 1.3em; color: #1565c0; text-align: center;"><strong>Solution:</strong> Visual menu with images to prompt memory</p>
+                </div>
+                
+                <div style="background: white; padding: 30px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 25px;">Activities We Offer Here</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">🎨</div>
+                            <div style="font-weight: 600; color: #2c3e50;">Arts & Crafts</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Painting, drawing, knitting</div>
+                            <label style="margin-top: 10px; display: block;"><input type="checkbox" disabled> Interested</label>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">🎵</div>
+                            <div style="font-weight: 600; color: #2c3e50;">Music</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Singing, listening, concerts</div>
+                            <label style="margin-top: 10px; display: block;"><input type="checkbox" disabled> Interested</label>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">🌻</div>
+                            <div style="font-weight: 600; color: #2c3e50;">Gardening</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Indoor plants, flowers</div>
+                            <label style="margin-top: 10px; display: block;"><input type="checkbox" disabled> Interested</label>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">📚</div>
+                            <div style="font-weight: 600; color: #2c3e50;">Reading</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Books, magazines, news</div>
+                            <label style="margin-top: 10px; display: block;"><input type="checkbox" disabled> Interested</label>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">🎮</div>
+                            <div style="font-weight: 600; color: #2c3e50;">Games</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Cards, bingo, puzzles</div>
+                            <label style="margin-top: 10px; display: block;"><input type="checkbox" disabled> Interested</label>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">🧘</div>
+                            <div style="font-weight: 600; color: #2c3e50;">Exercise</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Chair yoga, walking, tai chi</div>
+                            <label style="margin-top: 10px; display: block;"><input type="checkbox" disabled> Interested</label>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">💅</div>
+                            <div style="font-weight: 600; color: #2c3e50;">Self-Care</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Nails, hair, spa day</div>
+                            <label style="margin-top: 10px; display: block;"><input type="checkbox" disabled> Interested</label>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 15px; background: #f8f9fa; border-radius: 12px; border: 2px solid #e0e0e0;">
+                            <div style="font-size: 3em; margin-bottom: 10px;">🍳</div>
+                            <div style="font-weight: 600; color: #2c3e50;">Cooking</div>
+                            <div style="font-size: 0.85em; color: #666; margin-top: 5px;">Baking, recipes, tasting</div>
+                            <label style="margin-top: 10px; display: block;"><input type="checkbox" disabled> Interested</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote-box" style="margin-top: 25px;">
+                    "The activity menu helps them remember things they haven't done in years"
+                    <div class="quote-author">— Activity Staff Member</div>
+                </div>
+            </div>
+            <div class="slide-number">12 / 23</div>
+        </div>
+
+        <!-- Slide 13: Phase 6 - Test & Scale -->
+        <div class="slide">
+            <h2>Measured Outcomes</h2>
+            <div class="content-scroll">
+                <h3>Efficiency Gains</h3>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-number">-55%</div>
+                        <div class="metric-label">Assessment Time<br>(42 min → 19 min)</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">+27%</div>
+                        <div class="metric-label">Completion Rate<br>(73% → 100%)</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">-60%</div>
+                        <div class="metric-label">Time to First Activity<br>(5.3 days → 2.1 days)</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">+62%</div>
+                        <div class="metric-label">Fully Completed Fields<br>(58% → 94%)</div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Quality & Satisfaction</h3>
+                <ul>
+                    <li>Activity attendance for new residents: <span class="highlight">+34% in first month</span></li>
+                    <li>Staff satisfaction: <span class="highlight">4.2 → 8.7 (out of 10)</span></li>
+                    <li>100% of staff would recommend (vs. 20% before)</li>
+                    <li>Model scaled to 2 other departments</li>
+                </ul>
+            </div>
+            <div class="slide-number">13 / 23</div>
+        </div>
+
+        <!-- Slide 14: Impact Metrics -->
+        <div class="slide">
+            <h2>What Staff Said</h2>
+            <div class="content-scroll">
+                <div class="quote-box">
+                    "I can actually look at the resident while talking now"
+                    <div class="quote-author">— Activity Staff Member</div>
+                </div>
+                
+                <div class="quote-box">
+                    "It feels like a conversation, not an interrogation"
+                    <div class="quote-author">— Activity Staff Member</div>
+                </div>
+                
+                <div class="quote-box">
+                    "I'm not dreading intakes anymore"
+                    <div class="quote-author">— Activity Staff Member</div>
+                </div>
+                
+                <div class="quote-box">
+                    "The activity menu helps them remember things they haven't done in years"
+                    <div class="quote-author">— Activity Staff Member</div>
+                </div>
+                
+                <div class="quote-box">
+                    "I can complete Part 1 on my phone while walking back from their room"
+                    <div class="quote-author">— Activity Staff Member</div>
+                </div>
+            </div>
+                        <div class="slide-number">14 / 23</div>
+        </div>
+
+        <!-- Slide 15: Staff Feedback -->
+        <div class="slide">
+            <h2>What Residents Said</h2>
+            <div class="content-scroll">
+                <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); padding: 40px; border-radius: 20px; text-align: center;">
+                    <p style="font-size: 1.8em; color: #2c3e50; margin-bottom: 30px; font-weight: 600;">Residents felt heard, not processed</p>
+                </div>
+                
+                <div class="quote-box">
+                    "She seemed interested in me, not just filling out forms"
+                    <div class="quote-author">— Resident</div>
+                </div>
+                
+                <div class="quote-box">
+                    "I liked seeing pictures of the activities - helped me remember I used to garden"
+                    <div class="quote-author">— Resident</div>
+                </div>
+                
+                <div class="quote-box">
+                    "It didn't feel overwhelming"
+                    <div class="quote-author">— Resident</div>
+                </div>
+            </div>
+            <div class="slide-number">15 / 23</div>
+        </div>
+
+        <!-- Slide 16: Resident Feedback -->
+        <div class="slide">
+            <h2>Key Design Learnings</h2>
+            <div class="content-scroll">
+                <div class="insight-card">
+                    <strong>1. Design WITH Users, Not FOR Users</strong><br>
+                    Co-designing with activity staff ensured the tool matched real workflow, not imagined workflow
+                </div>
+                
+                <div class="insight-card">
+                    <strong>2. Observe Natural Behavior Before Asking Questions</strong><br>
+                    Watching how staff actually gathered information revealed the mismatch between natural process and forced formal assessment
+                </div>
+                
+                <div class="insight-card">
+                    <strong>3. Less Can Be More</strong><br>
+                    Cutting 25 questions made the assessment more effective, not less. Shorter tool got completed more often with better quality
+                </div>
+                
+                <div class="insight-card">
+                    <strong>4. Timing Matters as Much as Content</strong><br>
+                    Splitting into 3 brief touchpoints instead of one long interview aligned with natural relationship building
+                </div>
+                
+                <div class="insight-card">
+                    <strong>5. Prototypes Reveal What Words Can't</strong><br>
+                    Physical testing revealed specific pain points that interviews couldn't surface
+                </div>
+            </div>
+            <div class="slide-number">16 / 23</div>
+        </div>
+
+        <!-- Slide 17: Key Insights -->
+        <div class="slide">
+            <h2>Challenges Overcome</h2>
+            <div class="content-scroll">
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Challenge 1: Resistance to Change</h3>
+                        <p><strong>Problem:</strong> Staff skeptical about "another redesign"</p>
+                        <p><strong>Solution:</strong> Started with pure listening, no solutions. Co-designed together.</p>
+                        <p><strong>Result:</strong> 100% staff buy-in</p>
+                    </div>
+                    
+                    <div class="column">
+                        <h3>Challenge 2: IT Limitations</h3>
+                        <p><strong>Problem:</strong> IT said mobile and auto-save "couldn't be done"</p>
+                        <p><strong>Solution:</strong> Proved concept value with paper prototype first</p>
+                        <p><strong>Result:</strong> IT found workaround</p>
+                    </div>
+                </div>
+                
+                <div class="two-column" style="margin-top: 20px;">
+                    <div class="column">
+                        <h3>Challenge 3: "Missing Information"</h3>
+                        <p><strong>Problem:</strong> Admin worried about cutting questions</p>
+                        <p><strong>Solution:</strong> Showed 18 fields were blank 70% of time anyway</p>
+                        <p><strong>Result:</strong> Admin became advocate</p>
+                    </div>
+                    
+                    <div class="column">
+                        <h3>Challenge 4: Cognitive Impairment</h3>
+                        <p><strong>Problem:</strong> Some residents couldn't answer questions</p>
+                        <p><strong>Solution:</strong> Created observation-based checklist</p>
+                        <p><strong>Result:</strong> 100% completion rate</p>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-number">17 / 23</div>
+        </div>
+
+        <!-- Slide 18: Challenges Overcome -->
+        <div class="slide">
+            <h2>HCD Methods Applied</h2>
+            <div class="content-scroll">
+                <div class="two-column">
+                    <div class="column">
+                        <h3>Research Methods</h3>
+                        <ul style="font-size: 1em;">
+                            <li>Direct Observation</li>
+                            <li>Contextual Inquiry</li>
+                            <li>Semi-Structured Interviews</li>
+                            <li>Process Mapping</li>
+                            <li>Affinity Mapping</li>
+                            <li>Journey Mapping</li>
+                            <li>Pain Point Analysis</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="column">
+                        <h3>Design & Testing Methods</h3>
+                        <ul style="font-size: 1em;">
+                            <li>Co-Design Workshop</li>
+                            <li>Paper Prototyping</li>
+                            <li>Iterative Design</li>
+                            <li>Think-Aloud Protocol</li>
+                            <li>Pilot Testing</li>
+                            <li>A/B Comparison</li>
+                            <li>Outcome Measurement</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); padding: 25px; border-radius: 15px; margin-top: 30px; text-align: center;">
+                    <p style="font-size: 1.2em; color: #2c3e50;"><strong>13 distinct HCD methods</strong> applied across 6-week project</p>
+                </div>
+            </div>
+            <div class="slide-number">18 / 23</div>
+        </div>
+
+        <!-- Slide 19: Methods Applied -->
+        <div class="slide">
+            <h2>Stakeholder Collaboration</h2>
+            <div class="content-scroll">
+                <div class="insight-card">
+                    <strong>Activity Staff (Primary Users)</strong><br>
+                    Provided insights, co-designed solutions, tested prototypes, championed adoption
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Residents (End Users)</strong><br>
+                    Shared experience of being assessed, tested prototypes, guided language and format
+                </div>
+                
+                <div class="insight-card">
+                    <strong>IT Support</strong><br>
+                    Advised on technical feasibility, built prototypes, enabled auto-save and mobile functionality
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Nursing Liaison</strong><br>
+                    Identified redundant questions, shared data to prepopulate assessment
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Facility Administrator</strong><br>
+                    Approved resources, supported pilot testing, facilitated scaling to other departments
+                </div>
+            </div>
+            <div class="slide-number">19 / 23</div>
+        </div>
+
+        <!-- Slide 20: Stakeholder Collaboration -->
+        <div class="slide">
+            <h2>Sustainability & Scale</h2>
+            <div class="content-scroll">
+                <h3>6 Months Post-Implementation</h3>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-number">98%</div>
+                        <div class="metric-label">Completion Rate Maintained</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">-40%</div>
+                        <div class="metric-label">New Staff Onboarding Time</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">0</div>
+                        <div class="metric-label">Requests to Return to Old System</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-number">2</div>
+                        <div class="metric-label">Other Departments Adopted Model</div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 30px;">Scaling Strategy</h3>
+                <ul>
+                    <li>Nursing department adapted for social history assessment</li>
+                    <li>Dietary team adapted for meal preference intake</li>
+                    <li>Leadership presented at regional conference as best practice</li>
+                    <li>Created replication guide for other facilities</li>
+                </ul>
+            </div>
+            <div class="slide-number">20 / 23</div>
+        </div>
+
+        <!-- Slide 21: Sustainability & Scale -->
+        <div class="slide">
+            <h2>Key Takeaways for Healthcare Design</h2>
+            <div class="content-scroll">
+                <div class="insight-card">
+                    <strong>Clinical staff are overwhelmed</strong> - Designs must reduce burden, not add to it
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Workflow is sacred</strong> - Tools must fit existing flow, not force new behaviors
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Perfect is the enemy of done</strong> - Staff need "good enough" tools they'll actually use
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Design for interruptions</strong> - Healthcare is chaotic, tools must accommodate that reality
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Show, don't tell</strong> - Visual aids support memory and reduce cognitive load
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Stakeholder buy-in requires stakeholder involvement</strong> - People support what they create
+                </div>
+                
+                <div class="insight-card">
+                    <strong>Measurement drives adoption</strong> - Data tells a compelling story to overcome resistance
+                </div>
+            </div>
+            <div class="slide-number">21 / 23</div>
+        </div>
+
+        <!-- Slide 22: Key Takeaways -->
+        <div class="slide title-slide">
+            <h1 style="font-size: 3em;">Project Summary</h1>
+            <div style="text-align: left; max-width: 900px; margin: 40px auto;">
+                <div class="metrics-grid">
+                    <div class="metric-box" style="background: rgba(255,255,255,0.9);">
+                        <div class="metric-number" style="color: #667eea;">-55%</div>
+                        <div class="metric-label" style="color: #2c3e50;">Time Saved</div>
+                    </div>
+                    <div class="metric-box" style="background: rgba(255,255,255,0.9);">
+                        <div class="metric-number" style="color: #667eea;">100%</div>
+                        <div class="metric-label" style="color: #2c3e50;">Completion Rate</div>
+                    </div>
+                    <div class="metric-box" style="background: rgba(255,255,255,0.9);">
+                        <div class="metric-number" style="color: #667eea;">+107%</div>
+                        <div class="metric-label" style="color: #2c3e50;">Staff Satisfaction</div>
+                    </div>
+                    <div class="metric-box" style="background: rgba(255,255,255,0.9);">
+                        <div class="metric-number" style="color: #667eea;">2</div>
+                        <div class="metric-label" style="color: #2c3e50;">Departments Scaled</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 40px; padding: 30px; background: rgba(255,255,255,0.15); border-radius: 15px;">
+                    <p style="font-size: 1.3em; line-height: 1.8; color: white;">
+                        <strong>A systematic HCD approach</strong> transformed a frustrating, time-consuming assessment into an efficient, user-friendly tool that improved outcomes for staff, residents, and the organization.
+                    </p>
+                </div>
+            </div>
+            <div class="slide-number">22 / 23</div>
+        </div>
+
+        <!-- Slide 23: Summary -->
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            
+            currentSlide = (n + totalSlides) % totalSlides;
+            
+            slides[currentSlide].classList.add('active');
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
+
+        
